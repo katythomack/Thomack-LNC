@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="NACLNC member seal placeholder">
+  <circle cx="100" cy="100" r="96" fill="none" stroke="#9aaab2" stroke-width="3" stroke-dasharray="8 6"/>
+  <text x="100" y="95" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="600" fill="#5b6f78">NACLNC</text>
+  <text x="100" y="120" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#5b6f78">member seal</text>
+</svg>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-label="Headshot placeholder">
+  <rect width="400" height="500" fill="#e6ecef"/>
+  <circle cx="200" cy="190" r="80" fill="#c5d1d7"/>
+  <path d="M60 500c0-90 63-150 140-150s140 60 140 150z" fill="#c5d1d7"/>
+  <text x="200" y="470" text-anchor="middle" font-family="sans-serif" font-size="20" fill="#5b6f78">Headshot coming soon</text>
+</svg>
