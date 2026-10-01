@@ -195,7 +195,7 @@ h1, h2, h3 {
   border-top: 1px solid var(--line);
 }
 
-.membership img { width: 314px; }
+.membership img { width: 314px; border-radius: 6px; border: 1px solid var(--line); }
 
 /* Contact */
 .contact { text-align: center; }
