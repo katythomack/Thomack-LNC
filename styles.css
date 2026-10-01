@@ -142,15 +142,22 @@ h1, h2, h3 {
 /* Strengths */
 .strengths { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 
-.strengths-grid {
+.strengths-list {
+  list-style: none;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 }
 
-.strength { padding: 40px 24px; text-align: center; }
-.strength + .strength { border-left: 1px solid var(--line); }
-.strength h2 { font-size: 1.5rem; color: var(--brand-dark); margin-bottom: 0.3em; }
-.strength p { margin: 0; color: var(--muted); }
+.strengths-list li {
+  padding: 32px 16px;
+  text-align: center;
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  color: var(--brand-dark);
+}
+
+.strengths-list li + li { border-left: 1px solid var(--line); }
 
 /* Sections */
 .section { padding: 88px 0; }
@@ -161,23 +168,25 @@ h1, h2, h3 {
   color: var(--brand-dark);
 }
 
-.services-grid {
+.services-list {
+  list-style: none;
+  padding: 0;
+  margin: 24px 0 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
-  margin-top: 32px;
 }
 
-.card {
+.services-list li {
   background: var(--bg);
   border: 1px solid var(--line);
   border-top: 4px solid var(--accent);
   border-radius: var(--radius);
-  padding: 28px;
+  padding: 24px;
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  color: var(--brand-dark);
 }
-
-.card h3 { font-size: 1.25rem; color: var(--brand-dark); }
-.card p { margin: 0; color: var(--muted); }
 
 /* About */
 .about-grid {
@@ -189,13 +198,12 @@ h1, h2, h3 {
 
 .headshot { border-radius: var(--radius); width: 100%; }
 
-.credentials { padding-left: 1.2em; margin: 24px 0; }
-.credentials li { margin-bottom: 4px; }
 
 .membership {
   display: flex;
   align-items: center;
   gap: 16px;
+  margin-top: 24px;
   padding-top: 24px;
   border-top: 1px solid var(--line);
 }
@@ -204,14 +212,13 @@ h1, h2, h3 {
 
 /* Contact */
 .contact { text-align: center; }
-.contact-inner .lead { margin: 0 auto; }
 
 .contact-methods {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 20px;
-  margin: 40px 0 24px;
+  margin: 32px 0 24px;
 }
 
 .contact-item {
@@ -259,9 +266,8 @@ h1, h2, h3 {
   .nav { gap: 14px; }
   .nav a:not(.nav-cta) { display: none; }
   .hero { padding: 64px 0 56px; }
-  .strengths-grid, .services-grid { grid-template-columns: 1fr; }
-  .strength { padding: 28px 16px; }
-  .strength + .strength { border-left: 0; border-top: 1px solid var(--line); }
+  .services-list { grid-template-columns: 1fr; gap: 12px; }
+  .strengths-list li { padding: 20px 8px; font-size: 1.2rem; }
   .section { padding: 64px 0; }
   .about-grid { grid-template-columns: 1fr; gap: 32px; }
   .headshot { max-width: 280px; }
