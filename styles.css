@@ -59,30 +59,8 @@ h1, h2, h3 {
   min-height: 68px;
 }
 
-.wordmark {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: flex-start;
-  font-family: var(--serif);
-  font-weight: 700;
-  font-size: 2.4rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--brand-dark);
-  text-decoration: none;
-  line-height: 1;
-  padding: 12px 0;
-}
-
-.wordmark span {
-  margin-top: 6px;
-  font-family: var(--sans);
-  font-weight: 600;
-  font-size: 0.92rem;
-  letter-spacing: 0.24em;
-  white-space: nowrap;
-  color: #9a7741;
-}
+.wordmark { display: block; padding: 10px 0; }
+.wordmark img { height: 72px; width: auto; }
 
 .nav { display: flex; align-items: center; gap: 24px; }
 
@@ -271,8 +249,7 @@ h1, h2, h3 {
 @media (max-width: 800px) {
   body { font-size: 17px; }
   .container { padding: 0 16px; }
-  .wordmark { font-size: 1.5rem; padding: 10px 0; }
-  .wordmark span { font-size: 0.6rem; letter-spacing: 0.18em; }
+  .wordmark img { height: 52px; }
   .nav .nav-cta { padding: 8px 12px; font-size: 0.85rem; }
   .nav { gap: 14px; }
   .nav a:not(.nav-cta) { display: none; }
@@ -285,9 +262,7 @@ h1, h2, h3 {
   .contact-item { min-width: 0; width: 100%; }
 }
 
-@media (max-width: 380px) {
-  .wordmark { font-size: 1.2rem; }
-  .wordmark span { font-size: 0.5rem; letter-spacing: 0.14em; }
-  .header-inner { gap: 8px; }
-  .nav .nav-cta { padding: 6px 10px; font-size: 0.75rem; }
+@media (max-width: 480px) {
+  .wordmark img { height: 48px; }
+  .nav { display: none; }
 }
