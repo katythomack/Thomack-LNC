@@ -91,7 +91,49 @@
             <span class="contact-value">katy@thomacklnc.com</span>
           </a>
         </div>
-        <p class="note">Please don't send medical records by email.</p>
+
+        <form class="contact-form" name="contact" method="POST" action="/thanks.html" data-netlify="true" netlify-honeypot="company-website">
+          <input type="hidden" name="form-name" value="contact">
+          <p class="form-hp" aria-hidden="true">
+            <label>Leave this empty <input name="company-website" tabindex="-1" autocomplete="off"></label>
+          </p>
+          <p class="form-intro">Or send a message here and I'll get back to you.</p>
+          <div class="form-row">
+            <label>
+              <span>Name</span>
+              <input type="text" name="name" autocomplete="name" required>
+            </label>
+            <label>
+              <span>Firm <em>(optional)</em></span>
+              <input type="text" name="firm" autocomplete="organization">
+            </label>
+          </div>
+          <div class="form-row">
+            <label>
+              <span>Email</span>
+              <input type="email" name="email" autocomplete="email" required>
+            </label>
+            <label>
+              <span>Phone <em>(optional)</em></span>
+              <input type="tel" name="phone" autocomplete="tel">
+            </label>
+          </div>
+          <label>
+            <span>I represent the</span>
+            <select name="side">
+              <option value="">Select one (optional)</option>
+              <option>Plaintiff</option>
+              <option>Defense</option>
+            </select>
+          </label>
+          <label>
+            <span>How can I help?</span>
+            <textarea name="message" rows="5" required placeholder="A brief description of the case and what you need. Please don't include patient names or medical records."></textarea>
+          </label>
+          <button type="submit" class="btn btn-primary">Send message</button>
+        </form>
+
+        <p class="note">Please don't send medical records by email or through this form.</p>
       </div>
     </section>
 
