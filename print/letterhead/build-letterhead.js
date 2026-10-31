@@ -25,9 +25,7 @@ const LEFT_W = 4.05 * IN, RIGHT_W = CONTENT_W - LEFT_W;
 const contactLine = (text, o = {}) =>
   new Paragraph({ spacing: { after: 0, line: 264, lineRule: LineRuleType.AUTO }, children: [run(text, { size: 17, ...o })] });
 
-const firstHeader = new Header({
-  children: [
-    new Table({
+const logoTable = () => new Table({
       width: { size: CONTENT_W, type: WidthType.DXA },
       columnWidths: [LEFT_W, RIGHT_W],
       borders: noBorders,
@@ -52,20 +50,21 @@ const firstHeader = new Header({
           ],
         }),
       ] })],
-    }),
-    new Paragraph({ border: goldRule('bottom'), spacing: { before: 60, after: 240 }, children: [] }),
-  ],
-});
+    });
+const headRule = () => new Paragraph({ border: goldRule('bottom'), spacing: { before: 60, after: 240 }, children: [] });
 
-const firstFooter = new Footer({
+const firstHeader = new Header({ children: [logoTable(), headRule()] });
+
+const makeFooter = () => new Footer({
   children: [new Paragraph({
     alignment: AlignmentType.CENTER, border: goldRule('top'),
     children: [run('Parker, Colorado  ·  Serving plaintiff and defense attorneys nationwide', { size: 15, color: MUTED })],
   })],
 });
+const firstFooter = makeFooter();
 
 // ---------- Continuation pages: slim header with page number ----------
-const laterHeader = new Header({
+const makeLaterHeader = () => new Header({
   children: [new Paragraph({
     border: goldRule('bottom'), spacing: { after: 360 },
     tabStops: [{ type: TabStopType.RIGHT, position: CONTENT_W }],
@@ -76,6 +75,7 @@ const laterHeader = new Header({
     ],
   })],
 });
+const laterHeader = makeLaterHeader();
 const laterFooter = new Footer({ children: [new Paragraph({ children: [] })] });
 
 // ---------- Body: a fill-in-the-blanks letter ----------
@@ -83,7 +83,7 @@ const p = (text, o = {}) => new Paragraph({ spacing: { after: 0 }, children: [ru
 const gap = () => new Paragraph({ spacing: { after: 0 }, children: [] });
 const ph = {}; // placeholders use normal text color so typed replacements aren't gray
 
-const body = [
+const makeBody = () => [
   p('[Date]', { run: ph }),
   gap(),
   p('[Attorney Name], Esq.', { run: ph }),
@@ -117,8 +117,34 @@ const doc = new Document({
     },
     headers: { first: firstHeader, default: laterHeader },
     footers: { first: firstFooter, default: laterFooter },
-    children: body,
+    children: makeBody(),
   }],
+});
+
+// ---------- Apple Pages version ----------
+// Pages can't keep a separate first-page header or a table inside a header, so
+// here the logo block sits at the top of the page-1 body, the slim header is the
+// only header (hide it on page 1 in Pages: Document > Section > "Hide on first
+// page of section"), and the footer appears on every page.
+const pagesDoc = new Document({
+  creator: 'Thomack Legal Nurse Consulting',
+  title: 'Thomack LNC Letterhead (Pages)',
+  styles: { default: { document: { run: { font: SERIF, size: 22, color: INK }, paragraph: { spacing: { line: 276 } } } } },
+  sections: [{
+    properties: {
+      page: {
+        size: { width: 12240, height: 15840 },
+        margin: { top: 0.85 * IN, bottom: 0.85 * IN, left: IN, right: IN, header: 0.45 * IN, footer: 0.45 * IN },
+      },
+    },
+    headers: { default: makeLaterHeader() },
+    footers: { default: makeFooter() },
+    children: [logoTable(), headRule(), ...makeBody()],
+  }],
+});
+Packer.toBuffer(pagesDoc).then((buf) => {
+  fs.writeFileSync(path.join(here, 'thomack-letterhead-pages.docx'), buf);
+  console.log('wrote thomack-letterhead-pages.docx');
 });
 
 Packer.toBuffer(doc).then((buf) => {
