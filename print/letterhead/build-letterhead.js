@@ -58,7 +58,7 @@ const firstHeader = new Header({ children: [logoTable(), headRule()] });
 const makeFooter = () => new Footer({
   children: [new Paragraph({
     alignment: AlignmentType.CENTER, border: goldRule('top'),
-    children: [run('Parker, Colorado  ·  Serving plaintiff and defense attorneys nationwide', { size: 15, color: MUTED })],
+    children: [run('Parker, Colorado  ·  Serving clients nationwide', { size: 15, color: MUTED })],
   })],
 });
 const firstFooter = makeFooter();
