@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Email signature – Thomack Legal Nurse Consulting</title>
+<style>
+  body { font-family: -apple-system, "Segoe UI", Arial, sans-serif; color: #1d2a30; background: #f4f6f5; margin: 0; padding: 32px 16px; line-height: 1.5; }
+  main { max-width: 680px; margin: 0 auto; }
+  h1 { font-family: Georgia, serif; color: #163a47; font-weight: 400; font-size: 26px; margin: 0 0 4px; }
+  h2 { font-size: 15px; color: #163a47; margin: 28px 0 8px; }
+  .card { background: #fff; border: 1px solid #dde3e5; border-radius: 8px; padding: 24px; margin: 12px 0; }
+  button { font: 600 14px/1 -apple-system, "Segoe UI", Arial, sans-serif; background: #163a47; color: #fff; border: 0; border-radius: 6px; padding: 10px 16px; cursor: pointer; }
+  button:hover { background: #1f4e5f; }
+  .done { color: #2a7a4f; font-size: 14px; margin-left: 10px; }
+  ol { padding-left: 20px; } li { margin: 4px 0; }
+  .muted { color: #55666e; font-size: 14px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Email signature</h1>
+  <p class="muted">Click <b>Copy signature</b>, then paste it into your email program's signature settings (steps below).</p>
+
+  <div class="card">
+    <!-- ===== SIGNATURE START (inline styles only, for email clients) ===== -->
+    <div id="sig">
+      <table cellpadding="0" cellspacing="0" border="0" role="presentation" style="border-collapse:collapse;font-family:Georgia,'Times New Roman',serif;color:#1d2a30;">
+        <tr>
+          <td style="padding:0 0 2px 0;font-family:Georgia,'Times New Roman',serif;font-size:16px;font-weight:bold;color:#163a47;">Katy Thomack, RN, MSN, CLNC</td>
+        </tr>
+        <tr>
+          <td style="padding:0 0 8px 0;font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#b08d57;">Legal Nurse Consultant</td>
+        </tr>
+        <tr>
+          <td style="padding:0 0 10px 0;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#1d2a30;">
+            <a href="tel:+17202541359" style="color:#1d2a30;text-decoration:none;">720-254-1359</a>
+            <span style="color:#b08d57;">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+            <a href="https://thomacklnc.com" style="color:#1f4e5f;text-decoration:none;">thomacklnc.com</a>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:0 0 0 0;border-top:1px solid #b08d57;padding-top:10px;">
+            <a href="https://thomacklnc.com" style="text-decoration:none;"><img src="https://thomacklnc.com/images/logo.png" width="200" height="40" alt="Thomack Legal Nurse Consulting" style="display:block;width:200px;height:40px;border:0;"></a>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <!-- ===== SIGNATURE END ===== -->
+  </div>
+  <button type="button" data-copy="sig">Copy signature</button><span class="done" id="sig-done"></span>
+
+  <h2>Add it to your email</h2>
+  <p class="muted"><b>Gmail / Google Workspace</b> (on a computer)</p>
+  <ol>
+    <li>Click the gear icon, then <b>See all settings</b>.</li>
+    <li>On the <b>General</b> tab, scroll to <b>Signature</b> and click <b>Create new</b>. Name it "Thomack LNC".</li>
+    <li>Click in the box and paste (<b>⌘V</b> on a Mac, <b>Ctrl+V</b> on Windows).</li>
+    <li>Below the box, set it as the default for new emails and replies, then click <b>Save Changes</b> at the bottom.</li>
+  </ol>
+
+  <p class="muted"><b>Apple Mail</b> (on a Mac)</p>
+  <ol>
+    <li>Open this page in <b>Safari</b> and click <b>Copy signature</b>.</li>
+    <li>In Mail, go to <b>Mail → Settings → Signatures</b>, pick the account, and click <b>+</b>.</li>
+    <li>Uncheck <b>Always match my default message font</b>.</li>
+    <li>Delete the sample text in the right-hand box and paste.</li>
+  </ol>
+
+  <p class="muted"><b>Outlook</b></p>
+  <ol>
+    <li>Go to <b>Settings → Mail → Compose and reply</b> (or <b>Signatures</b>).</li>
+    <li>Create a new signature, paste, and save.</li>
+  </ol>
+
+  <p class="muted"><b>iPhone Mail</b>: the iPhone keeps its own signature. Go to <b>Settings → Apps → Mail → Signature</b> and type:<br>
+  <code>Katy Thomack, RN, MSN, CLNC<br>Legal Nurse Consultant<br>720-254-1359 | thomacklnc.com</code></p>
+</main>
+<script>
+  document.querySelectorAll('button[data-copy]').forEach(function (btn) {
+    btn.addEventListener('click', async function () {
+      var id = btn.getAttribute('data-copy'), el = document.getElementById(id), done = document.getElementById(id + '-done');
+      try {
+        await navigator.clipboard.write([new ClipboardItem({
+          'text/html': new Blob([el.innerHTML], { type: 'text/html' }),
+          'text/plain': new Blob([el.innerText], { type: 'text/plain' })
+        })]);
+      } catch (e) {
+        var r = document.createRange(); r.selectNodeContents(el);
+        var s = getSelection(); s.removeAllRanges(); s.addRange(r); document.execCommand('copy'); s.removeAllRanges();
+      }
+      done.textContent = 'Copied. Now paste it into your signature settings.';
+    });
+  });
+</script>
+</body>
+</html>
