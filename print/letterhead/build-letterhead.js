@@ -122,8 +122,8 @@ const doc = new Document({
 });
 
 // ---------- Apple Pages version ----------
-// Pages can't keep a separate first-page header or a table inside a header, so
-// here the logo block sits at the top of the page-1 body, the slim header is the
+// Pages can't keep a separate first-page header, tables, or empty-paragraph
+// borders, so here the logo block is one image at the top of the page-1 body, the slim header is the
 // only header (hide it on page 1 in Pages: Document > Section > "Hide on first
 // page of section"), and the footer appears on every page.
 const pagesDoc = new Document({
@@ -139,7 +139,16 @@ const pagesDoc = new Document({
     },
     headers: { default: makeLaterHeader() },
     footers: { default: makeFooter() },
-    children: [logoTable(), headRule(), ...makeBody()],
+    children: [
+      // Logo + contact block + gold rule as one image (letterhead-header.png, from
+      // letterhead-header.html), because Pages drops tables and empty-paragraph borders.
+      new Paragraph({ spacing: { before: 0, after: 360, line: 240, lineRule: LineRuleType.AUTO }, children: [new ImageRun({
+        type: 'png', data: fs.readFileSync(path.join(here, 'letterhead-header.png')),
+        transformation: { width: 624, height: Math.round(624 * 594 / 3900) },
+        altText: { title: 'Thomack Legal Nurse Consulting letterhead', description: 'Logo and contact information', name: 'letterhead' },
+      })] }),
+      ...makeBody(),
+    ],
   }],
 });
 Packer.toBuffer(pagesDoc).then((buf) => {
