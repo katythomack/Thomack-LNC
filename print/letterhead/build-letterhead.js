@@ -21,7 +21,7 @@ const goldRule = (side) => ({ [side]: { style: BorderStyle.SINGLE, size: 6, colo
 const run = (text, o = {}) => new TextRun({ text, font: SERIF, color: INK, ...o });
 
 // ---------- First-page header: logo left, contact block right ----------
-const LEFT_W = 4.35 * IN, RIGHT_W = CONTENT_W - LEFT_W;
+const LEFT_W = 4.05 * IN, RIGHT_W = CONTENT_W - LEFT_W;
 const contactLine = (text, o = {}) =>
   new Paragraph({ spacing: { after: 0, line: 264, lineRule: LineRuleType.AUTO }, children: [run(text, { size: 17, ...o })] });
 
@@ -45,8 +45,7 @@ const firstHeader = new Header({
           width: { size: RIGHT_W, type: WidthType.DXA }, borders: noBorders, verticalAlign: VerticalAlign.BOTTOM,
           margins: { left: 0.35 * IN, right: 0 },
           children: [
-            contactLine('Katy Thomack', { bold: true, color: TEAL, size: 19 }),
-            contactLine('RN, MSN, CLNC', { color: TEAL }),
+            contactLine('Katy Thomack, RN, MSN, CLNC', { bold: true, color: TEAL }),
             contactLine('720-254-1359'),
             contactLine('katy@thomacklnc.com'),
             contactLine('thomacklnc.com'),
@@ -54,7 +53,7 @@ const firstHeader = new Header({
         }),
       ] })],
     }),
-    new Paragraph({ border: goldRule('bottom'), spacing: { before: 60, after: 480 }, children: [] }),
+    new Paragraph({ border: goldRule('bottom'), spacing: { before: 60, after: 240 }, children: [] }),
   ],
 });
 
@@ -113,7 +112,7 @@ const doc = new Document({
       titlePage: true,
       page: {
         size: { width: 12240, height: 15840 },
-        margin: { top: 1.15 * IN, bottom: 1.1 * IN, left: IN, right: IN, header: 0.55 * IN, footer: 0.5 * IN },
+        margin: { top: 1.15 * IN, bottom: 0.85 * IN, left: IN, right: IN, header: 0.5 * IN, footer: 0.45 * IN },
       },
     },
     headers: { first: firstHeader, default: laterHeader },
