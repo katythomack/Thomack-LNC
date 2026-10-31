@@ -64,9 +64,9 @@ const makeFooter = () => new Footer({
 const firstFooter = makeFooter();
 
 // ---------- Continuation pages: slim header with page number ----------
-const makeLaterHeader = () => new Header({
+const makeLaterHeader = (after = 360) => new Header({
   children: [new Paragraph({
-    border: goldRule('bottom'), spacing: { after: 360 },
+    border: goldRule('bottom'), spacing: { after },
     tabStops: [{ type: TabStopType.RIGHT, position: CONTENT_W }],
     children: [
       run('Thomack Legal Nurse Consulting', { size: 16, color: TEAL, bold: true }),
@@ -79,8 +79,9 @@ const laterHeader = makeLaterHeader();
 const laterFooter = new Footer({ children: [new Paragraph({ children: [] })] });
 
 // ---------- Body: a fill-in-the-blanks letter ----------
-const p = (text, o = {}) => new Paragraph({ spacing: { after: 0 }, children: [run(text, o.run)], ...o.para });
-const gap = () => new Paragraph({ spacing: { after: 0 }, children: [] });
+const BODY_SPACING = { after: 0, line: 276, lineRule: LineRuleType.AUTO }; // explicit so Pages keeps 1.15 spacing
+const p = (text, o = {}) => new Paragraph({ spacing: BODY_SPACING, children: [run(text, o.run)], ...o.para });
+const gap = () => new Paragraph({ spacing: BODY_SPACING, children: [] });
 const ph = {}; // placeholders use normal text color so typed replacements aren't gray
 
 const makeBody = () => [
@@ -91,7 +92,7 @@ const makeBody = () => [
   p('[Street Address]', { run: ph }),
   p('[City, State ZIP]', { run: ph }),
   gap(),
-  new Paragraph({ spacing: { after: 0 }, children: [run('Re:\t', { bold: true }), run('[Case name / matter]', ph)], tabStops: [{ type: TabStopType.LEFT, position: 0.5 * IN }] }),
+  new Paragraph({ spacing: BODY_SPACING, children: [run('Re:\t', { bold: true }), run('[Case name / matter]', ph)], tabStops: [{ type: TabStopType.LEFT, position: 0.5 * IN }] }),
   gap(),
   p('Dear [Attorney Name]:', { run: ph }),
   gap(),
@@ -126,6 +127,8 @@ const doc = new Document({
 // borders, so here the logo block is one image at the top of the page-1 body, the slim header is the
 // only header (hide it on page 1 in Pages: Document > Section > "Hide on first
 // page of section"), and the footer appears on every page.
+const headerPng = fs.readFileSync(path.join(here, 'letterhead-header.png'));
+const HEADER_PX = { w: headerPng.readUInt32BE(16), h: headerPng.readUInt32BE(20) };
 const pagesDoc = new Document({
   creator: 'Thomack Legal Nurse Consulting',
   title: 'Thomack LNC Letterhead (Pages)',
@@ -134,19 +137,20 @@ const pagesDoc = new Document({
     properties: {
       page: {
         size: { width: 12240, height: 15840 },
-        margin: { top: 0.85 * IN, bottom: 0.85 * IN, left: IN, right: IN, header: 0.45 * IN, footer: 0.45 * IN },
+        margin: { top: 0.6 * IN, bottom: 0.85 * IN, left: IN, right: IN, header: 0.35 * IN, footer: 0.45 * IN },
       },
     },
-    headers: { default: makeLaterHeader() },
+    headers: { default: makeLaterHeader(120) },
     footers: { default: makeFooter() },
     children: [
       // Logo + contact block + gold rule as one image (letterhead-header.png, from
       // letterhead-header.html), because Pages drops tables and empty-paragraph borders.
-      new Paragraph({ spacing: { before: 0, after: 360, line: 240, lineRule: LineRuleType.AUTO }, children: [new ImageRun({
+      new Paragraph({ spacing: { before: 0, after: 0, line: 240, lineRule: LineRuleType.AUTO }, children: [new ImageRun({
         type: 'png', data: fs.readFileSync(path.join(here, 'letterhead-header.png')),
-        transformation: { width: 624, height: Math.round(624 * 594 / 3900) },
+        transformation: { width: 624, height: Math.round(624 * HEADER_PX.h / HEADER_PX.w) },
         altText: { title: 'Thomack Legal Nurse Consulting letterhead', description: 'Logo and contact information', name: 'letterhead' },
       })] }),
+      gap(), // real empty line: Pages ignores "space after" on the image paragraph
       ...makeBody(),
     ],
   }],
