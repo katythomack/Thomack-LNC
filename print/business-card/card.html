@@ -7,7 +7,8 @@
 <style>
   /* US business card: 3.5" x 2" trim + 0.125" bleed each side = 3.75" x 2.25".
      Keep text inside the safe area (0.125" inside trim = 0.25" from page edge). */
-  @page { size: 3.75in 2.25in; margin: 0; }
+  /* --bleed defaults to 0.125in; ?bleed=0.055 gives Vistaprint's 3.61" x 2.11" file. */
+  :root { --bleed: 0.125in; }
   :root {
     --teal: #1f4e5f; --teal-dark: #163a47; --ink: #1d2a30; --muted: #55666e;
     --gold: #b08d57; --mist: #eef3f4;
@@ -17,9 +18,9 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   body { font-family: var(--sans); color: var(--ink); }
-  .card { width: 3.75in; height: 2.25in; position: relative; overflow: hidden; page-break-after: always; }
+  .card { width: calc(3.5in + 2 * var(--bleed)); height: calc(2in + 2 * var(--bleed)); position: relative; overflow: hidden; page-break-after: always; }
   .card:last-child { page-break-after: auto; }
-  .safe { position: absolute; inset: 0.25in; }
+  .safe { position: absolute; inset: calc(var(--bleed) + 0.125in); }
 
   /* ---------- FRONT ---------- */
   .front { background: #fff; }
@@ -31,7 +32,7 @@
   .front .title { font-size: 7.5pt; font-weight: 600; letter-spacing: 1.4pt; text-transform: uppercase; color: var(--gold); margin-top: 4pt; }
   .front .contact { position: absolute; right: 0; bottom: 0.02in; text-align: left; font-size: 8.5pt; line-height: 1.5; color: var(--ink); }
   .front .contact b { font-weight: 600; color: var(--teal-dark); }
-  .front .band { position: absolute; left: 0; right: 0; bottom: 0; height: calc(0.125in + 0.09in); background: var(--teal-dark); }
+  .front .band { position: absolute; left: 0; right: 0; bottom: 0; height: calc(var(--bleed) + 0.09in); background: var(--teal-dark); }
 
   /* ---------- BACK ---------- */
   .back { background: var(--teal-dark); color: #fff; }
@@ -50,12 +51,19 @@
 
   /* Proof mode (?proof in URL): show trim + safe guides */
   .proof .card::before, .proof .card::after { content: ""; position: absolute; pointer-events: none; z-index: 9; }
-  .proof .card::before { inset: 0.125in; border: 0.5pt solid #e0245e; }
-  .proof .card::after { inset: 0.25in; border: 0.5pt dashed #2a9d8f; }
+  .proof .card::before { inset: var(--bleed); border: 0.5pt solid #e0245e; }
+  .proof .card::after { inset: calc(var(--bleed) + 0.125in); border: 0.5pt dashed #2a9d8f; }
 </style>
 </head>
 <body>
-<script>if (location.search.includes('proof')) document.body.classList.add('proof');</script>
+<script>
+  if (location.search.includes('proof')) document.body.classList.add('proof');
+  var b = parseFloat(new URLSearchParams(location.search).get('bleed') || '0.125');
+  document.documentElement.style.setProperty('--bleed', b + 'in');
+  var ps = document.createElement('style');
+  ps.textContent = '@page { size: ' + (3.5 + 2 * b) + 'in ' + (2 + 2 * b) + 'in; margin: 0; }';
+  document.head.appendChild(ps);
+</script>
 
 <section class="card front">
   <div class="band"></div>
