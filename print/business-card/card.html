@@ -29,7 +29,8 @@
   .front .name { font-family: var(--serif); font-weight: 700; font-size: 11.5pt; color: var(--teal-dark); letter-spacing: 0.1pt; }
   .front .creds { font-family: var(--serif); font-size: 8.5pt; color: var(--teal-dark); margin-top: 1.5pt; }
   .front .title { font-size: 7.5pt; font-weight: 600; letter-spacing: 1.4pt; text-transform: uppercase; color: var(--gold); margin-top: 4pt; }
-  .front .contact { position: absolute; right: 0; bottom: 0.02in; text-align: right; font-size: 8.5pt; line-height: 1.5; color: var(--ink); }
+  .front .contact { position: absolute; right: 0; bottom: 0.02in; display: grid; grid-template-columns: auto auto; column-gap: 5pt; align-items: baseline; font-size: 8.5pt; line-height: 1.5; color: var(--ink); }
+  .front .contact .k { font-size: 6.5pt; font-weight: 600; letter-spacing: 0.5pt; color: var(--gold); }
   .front .contact b { font-weight: 600; color: var(--teal-dark); }
   .front .band { position: absolute; left: 0; right: 0; bottom: 0; height: calc(0.125in + 0.09in); background: var(--teal-dark); }
 
@@ -46,7 +47,6 @@
   .back .qr .box { background: #fff; border-radius: 4pt; padding: 0.06in; }
   .back .qr img { display: block; width: 100%; }
   .back .qr .cap { font-size: 6.75pt; line-height: 1.25; color: #fff; margin-top: 4pt; }
-  .back .qr .cap .url { display: block; font-weight: 600; font-size: 7.5pt; color: #fff; margin-top: 3pt; letter-spacing: 0.2pt; }
   .back .qr .cap b { display: block; color: var(--gold); font-weight: 600; letter-spacing: 0.5pt; text-transform: uppercase; font-size: 6.5pt; }
 
   /* Proof mode (?proof in URL): show trim + safe guides */
@@ -69,8 +69,9 @@
       <div class="title">Legal Nurse Consultant</div>
     </div>
     <div class="contact">
-      <div><b>720-254-1359</b></div>
-      <div>katy@thomacklnc.com</div>
+      <span class="k">P</span><b>720-254-1359</b>
+      <span class="k">E</span><span>katy@thomacklnc.com</span>
+      <span class="k">W</span><span>thomacklnc.com</span>
     </div>
   </div>
 </section>
@@ -89,7 +90,7 @@
     <div class="exp"><b>15+ years ICU &amp; PACU</b><br>Plaintiff &amp; defense attorneys<br>Parker, CO · Serving clients nationwide</div>
     <div class="qr">
       <div class="box"><img src="qr-contact.svg" alt="QR code to thomacklnc.com contact form"></div>
-      <div class="cap"><b>Complimentary</b>case consultation<span class="url">thomacklnc.com</span></div>
+      <div class="cap"><b>Complimentary</b>case consultation</div>
     </div>
   </div>
 </section>
