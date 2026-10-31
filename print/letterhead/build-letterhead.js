@@ -81,7 +81,7 @@ const laterFooter = new Footer({ children: [new Paragraph({ children: [] })] });
 // ---------- Body: a fill-in-the-blanks letter ----------
 const p = (text, o = {}) => new Paragraph({ spacing: { after: 0 }, children: [run(text, o.run)], ...o.para });
 const gap = () => new Paragraph({ spacing: { after: 0 }, children: [] });
-const ph = { color: MUTED };
+const ph = {}; // placeholders use normal text color so typed replacements aren't gray
 
 const body = [
   p('[Date]', { run: ph }),
@@ -124,4 +124,17 @@ const doc = new Document({
 Packer.toBuffer(doc).then((buf) => {
   fs.writeFileSync(path.join(here, 'thomack-letterhead.docx'), buf);
   console.log('wrote thomack-letterhead.docx');
+  // Word template (.dotx): same package, different main content type.
+  const { execFileSync } = require('child_process');
+  const tmp = fs.mkdtempSync(path.join(require('os').tmpdir(), 'dotx-'));
+  execFileSync('unzip', ['-q', path.join(here, 'thomack-letterhead.docx'), '-d', tmp]);
+  const ct = path.join(tmp, '[Content_Types].xml');
+  fs.writeFileSync(ct, fs.readFileSync(ct, 'utf8').replace(
+    'wordprocessingml.document.main+xml', 'wordprocessingml.template.main+xml'));
+  const out = path.join(here, 'thomack-letterhead.dotx');
+  fs.rmSync(out, { force: true });
+  execFileSync('zip', ['-qX', out, '[Content_Types].xml'], { cwd: tmp }); // keep it first in the archive
+  execFileSync('zip', ['-qXrD', out, '.'], { cwd: tmp });
+  fs.rmSync(tmp, { recursive: true });
+  console.log('wrote thomack-letterhead.dotx');
 });
